@@ -50,3 +50,4 @@ http://localhost:8090/api/movies/movies
 - No realicé las configuraciones del microservicio bills
 - Las configuraciones de seguridad están en todos los microservicios a pesar de que no logré que todos los microservicios funcionen como esperaba
 - Las configuraciones en Keycloak están realizadas a pesar de que no pude probar todo lo que hubiera deseado
+- No pude implementar Feign

@@ -1,0 +1,16 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: eureka-sever
+  cloud:
+    config:
+      enabled: false # configuracion para solucionar problema en consola
+
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+
+

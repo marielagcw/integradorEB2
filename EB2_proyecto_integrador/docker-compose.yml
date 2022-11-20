@@ -1,0 +1,48 @@
+version: '3.9'
+
+services:
+
+  postgres: # para keycloak
+    image: postgres:latest # ultima version de postgress
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - '5432:5432' # puerto de postgres -> 5439
+    volumes:
+    - db:/var/lib/postgresql/data
+
+  keycloak:
+    depends_on:
+      - postgres
+    container_name: local_keycloak
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_PASSWORD: 1234
+      KC_DB_USERNAME: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
+    image: quay.io/keycloak/keycloak:18.0.0
+    command: start-dev
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  mongo: # para la base de datos de usuarios
+    ports:
+      - '27017:27017'
+    container_name: dkrcomp-mongo
+    restart: always
+    logging:
+      options:
+        max-size: 1g
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mongoadmin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    image: mongo
+
+volumes:
+  db:
